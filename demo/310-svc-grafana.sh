@@ -63,6 +63,7 @@ docker run \
 	-v ${SVC_GRAFANA_DIR_PERSISTENTDATA}:/var/lib/grafana/:rw \
 	-v $PWD/${THIS_SCRIPT_RSRC_DIR}/provisioning/dashboards/conf:/etc/grafana/provisioning/dashboards/:ro \
 	-v $PWD/${THIS_SCRIPT_RSRC_DIR}/provisioning/dashboards/json:/mnt/grafana/provisioning/dashboards/:ro \
+	-v $PWD/${THIS_SCRIPT_RSRC_DIR}/provisioning/dashboards/home.json:/usr/share/grafana/public/dashboards/home.json:ro \
 	-v $PWD/${THIS_SCRIPT_RSRC_DIR}/provisioning/datasources:/etc/grafana/provisioning/datasources/:ro \
 	-e GF_SECURITY_ADMIN_USER=${SVC_GRAFANA_ADMIN_USER} \
 	-e GF_SECURITY_ADMIN_PASSWORD=${SVC_GRAFANA_ADMIN_PASSWORD} \
@@ -72,6 +73,7 @@ docker run \
 	-e INFLUXDB_TOKEN=${SVC_GRAFANA_INFLUXDB_TOKEN} \
 	--publish ${SVC_GRAFANA_PORT_WEBUI}:${SVC_GRAFANA_PORT_WEBUI} \
 	${SVC_GRAFANA_CONTAINER_IMAGENAME}:${SVC_GRAFANA_CONTAINER_IMAGEVERSION}
+	# -v $PWD/${THIS_SCRIPT_RSRC_DIR}/provisioning/dashboards/home.json:/etc/grafana/home_dashboard.json:ro \
 
 LOG_INFO "Container is running."
 LOG_LEVEL_DEC
