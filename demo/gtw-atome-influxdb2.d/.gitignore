@@ -1,0 +1,2 @@
+## When building the image, a snapshot of the app sources will be copied here.
+app_snapshot/
