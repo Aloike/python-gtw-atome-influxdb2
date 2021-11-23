@@ -1,0 +1,1394 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": 2,
+  "iteration": 1637672078596,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "true",
+                "result": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Connected"
+                }
+              },
+              "type": "special"
+            },
+            {
+              "options": {
+                "match": "false",
+                "result": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Disconnected"
+                }
+              },
+              "type": "special"
+            },
+            {
+              "options": {
+                "match": "empty",
+                "result": {
+                  "color": "transparent",
+                  "index": 2,
+                  "text": "Unknown"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "bool_yes_no"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "interval": "1s",
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^isConnected$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    //|>  range(start: - 1m, stop:v.timeRangeStop)\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"isConnected\"\n            )\n        )\n\n    |>  last()\n\n//    |>  map(\n//            fn: (r) => (\n//                {\n//                    _value: r._value,\n//                    _time: r._time,\n//                    //_field: r.host + \" / \" + r._measurement + \"::\" + r._field\n//                    _field: r._measurement + \":: Last power\"\n//                }\n//            )\n        //)\n\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Connection state",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "true",
+                "result": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Connected"
+                }
+              },
+              "type": "special"
+            },
+            {
+              "options": {
+                "match": "false",
+                "result": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Disconnected"
+                }
+              },
+              "type": "special"
+            },
+            {
+              "options": {
+                "match": "empty",
+                "result": {
+                  "color": "transparent",
+                  "index": 2,
+                  "text": "Unknown"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "bool_yes_no"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 18,
+        "x": 6,
+        "y": 0
+      },
+      "id": 11,
+      "interval": "1s",
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"isConnected\"\n            )\n        )\n\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: last,\n            createEmpty: ${aggregation_createEmpty}\n        )\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Connection state",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "voltamp"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 4
+      },
+      "id": 12,
+      "interval": "1s",
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"subscribed\"\n            )\n        )\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: false\n        )\n//    |>  last()\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Subscribed power",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value filteredPower"
+            },
+            "properties": [
+              {
+                "id": "custom.showPoints",
+                "value": "always"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 18,
+        "x": 6,
+        "y": 4
+      },
+      "id": 3,
+      "interval": "1s",
+      "options": {
+        "legend": {
+          "calcs": [
+            "min",
+            "mean",
+            "max",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "hide": true,
+          "query": "lData=from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"filteredPower\"\n                or\n                r._field    == \"last\"\n            )\n        )\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: true\n        )\n\n\n\nlData\n    |>  filter(\n            fn: (r) =>\n                r._field    == \"filteredPower\"\n        )\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r._value,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n                    //_field: \"Total for \" + r.period\n                    _field: r._measurement + \":: Filtered power\"\n                }\n            )\n        )\n    |>  yield(name: \"Filtered power\")\n\n\nlData\n    |>  filter(\n            fn: (r) =>\n                r._field    == \"last\"\n        )\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r._value,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \"::\" + r._field\n                    _field: r._measurement + \":: Last power\"\n                }\n            )\n        )\n    |>  yield(name: \"last\")",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"filteredPower\"\n            )\n        )\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: ${aggregation_createEmpty}\n        )\n\n\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r._value,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n                    //_field: \"Total for \" + r.period\n                    _field: r._measurement + \":: Filtered power\"\n                }\n            )\n        )\n    |>  yield(name: \"Filtered power\")\n\n",
+          "refId": "110_filtered"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"last\"\n            )\n        )\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: ${aggregation_createEmpty}\n        )\n\n\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r._value,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \"::\" + r._field\n                    _field: r._measurement + \":: Last power\"\n                }\n            )\n        )\n    |>  yield(name: \"last\")",
+          "refId": "210_last"
+        },
+        {
+          "hide": true,
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"filteredPower\"\n            )\n        )\n\n//    |>  aggregateWindow(\n//            every: v.windowPeriod,\n//            fn: mean,\n//            createEmpty: ${aggregation_createEmpty}\n//        )\n    //|>  window(every:$__interval)\n    |>  mean()\n    //|>  group(columns: [\"_time\", \"_field\"])\n    //|>  pivot(rowKey:[\"_start\", \"_stop\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n    //|>  group(columns: [\"_field\"])\n\n\n//    |>  map(\n//            fn: (r) => (\n//                {\n//                    _value: r._value,\n//                    _time: r._time,\n//                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n//                    //_field: \"Total for \" + r.period\n//                    _field: r._measurement + \":: Filtered power, mean\"\n//                }\n//            )\n//        )\n//    |>  yield(name: \"Filtered power, mean\")\n\n",
+          "refId": "filtered_mean_over_period"
+        }
+      ],
+      "title": "Live power",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 8
+      },
+      "id": 15,
+      "interval": "1s",
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            and (\n                r._field    == \"last\"\n            )\n        )\n        \n//    |>  map(\n//            fn: (r) => (\n//                {\n//                    _value: r._value,\n//                    _time: r._time,\n//                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n//                    //_field: \"Total for \" + r.period\n//                }\n//            )\n//        )\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: ${aggregation_createEmpty}\n        )\n    |>  yield(name: \"Filtered power\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Last power",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 8
+      },
+      "id": 17,
+      "interval": "1s",
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"last\"\n                or\n                r._field    == \"subscribed\"\n            )\n        )\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: false\n        )\n\n    // Align operand values into rows\n    |>  pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n\n    // Calculate the percentage\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r.last * 100.0 / r.subscribed,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n                    //_field: \"Total for \" + r.period\n                    _field: r._measurement + \":: Last power percentage\"\n                }\n            )\n        )\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Last W as % of subscribed",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 12
+      },
+      "id": 14,
+      "interval": "1s",
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            and (\n                r._field    == \"filteredPower\"\n            )\n        )\n\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: ${aggregation_createEmpty}\n        )\n\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r._value,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n                    //_field: \"Total for \" + r.period\n                    _field: r._measurement + \":: Filtered power\"\n                }\n            )\n        )\n    |>  yield(name: \"Filtered power\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Filtered power",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HC for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for year"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for month"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total for day"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 12
+      },
+      "id": 16,
+      "interval": "1s",
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.1.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"${bucket}\")\n    |>  range(start: v.timeRangeStart, stop:v.timeRangeStop)\n    |>  filter(\n            fn: (r) =>\n                r._measurement == \"${measurement_live}\"\n            //and\n                //r.period =~ /^${period:json}+$/\n            and (\n                r._field    == \"filteredPower\"\n                or\n                r._field    == \"subscribed\"\n            )\n        )\n    |>  aggregateWindow(\n            every: v.windowPeriod,\n            fn: mean,\n            createEmpty: false\n        )\n\n    // Align operand values into rows\n    |>  pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n\n    // Calculate the percentage\n    |>  map(\n            fn: (r) => (\n                {\n                    _value: r.filteredPower * 100.0 / r.subscribed,\n                    _time: r._time,\n                    //_field: r.host + \" / \" + r._measurement + \":: Filtered power\" + r._field\n                    //_field: \"Total for \" + r.period\n                    _field: r._measurement + \":: Filtered power percentage\"\n                }\n            )\n        )\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Filtered W as % of subscribed",
+      "type": "gauge"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [
+    "atome",
+    "live",
+    "electricity",
+    "power",
+    "provisioned"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "demo-atome-svc-database/atome-Flux",
+          "value": "demo-atome-svc-database/atome-Flux"
+        },
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "description": "Name of the InfluxDB bucket containing Atome data.",
+        "error": null,
+        "hide": 2,
+        "label": null,
+        "name": "bucket",
+        "query": "atome",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "description": "Name of the measurement containing live data.",
+        "error": null,
+        "hide": 2,
+        "label": null,
+        "name": "measurement_live",
+        "query": "atome_live",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "Yes",
+          "value": "true"
+        },
+        "description": "Create empty data points when aggregating data.",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Create empty",
+        "multi": false,
+        "name": "aggregation_createEmpty",
+        "options": [
+          {
+            "selected": true,
+            "text": "Yes",
+            "value": "true"
+          },
+          {
+            "selected": false,
+            "text": "No",
+            "value": "false"
+          }
+        ],
+        "query": "Yes : true, No : false",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Atome Live",
+  "uid": "atome-live",
+  "version": 10001
+}
