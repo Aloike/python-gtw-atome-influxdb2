@@ -59,7 +59,7 @@ INFLUXDB_PRIMARYBUCKET=primary_bucket
 # Related to the Grafana Web visualisation service.
 # ------------------------------------------------------------------------------
 SVC_GRAFANA_CONTAINER_IMAGENAME=grafana/grafana
-SVC_GRAFANA_CONTAINER_IMAGEVERSION=8.1.3
+SVC_GRAFANA_CONTAINER_IMAGEVERSION=8.2.5
 SVC_GRAFANA_CONTAINER_NAME=demo-atome-svc-grafana
 SVC_GRAFANA_PORT_WEBUI=3000
 
