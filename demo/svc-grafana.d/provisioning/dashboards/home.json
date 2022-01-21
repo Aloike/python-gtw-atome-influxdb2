@@ -117,7 +117,9 @@
   ],
   "schemaVersion": 30,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "github.com/Aloike/python-gtw-atome-influxdb2"
+  ],
   "templating": {
     "list": []
   },
